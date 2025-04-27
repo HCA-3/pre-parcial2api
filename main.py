@@ -5,7 +5,9 @@ import models
 import schemas
 import crud
 from database import engine, get_db
+import uvicorn
 
+# Crear tablas en la base de datos
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -54,4 +56,7 @@ def actualizar_estado_tarea(
     if db_tarea is None:
         raise HTTPException(status_code=404, detail="Tarea no encontrada")
     return db_tarea
-# ya
+
+# Esta condición permite ejecutar con python main.py
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)

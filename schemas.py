@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 from enum import Enum
@@ -16,7 +16,7 @@ class EstadoUsuario(str, Enum):
 
 class UsuarioBase(BaseModel):
     nombre: str
-    email: EmailStr
+    email: str  # Cambiado de EmailStr a str
 
 class UsuarioCreate(UsuarioBase):
     premium: bool = False
