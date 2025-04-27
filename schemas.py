@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 from typing import Optional
 from enum import Enum
@@ -15,8 +15,8 @@ class EstadoUsuario(str, Enum):
     ELIMINADO = "Eliminado"
 
 class UsuarioBase(BaseModel):
-    nombre: str
-    email: str  # Cambiado de EmailStr a str
+    nombre: str = Field(..., min_length=2, max_length=50)
+    email: EmailStr = Field(..., example="usuario@example.com")
 
 class UsuarioCreate(UsuarioBase):
     premium: bool = False
@@ -30,8 +30,8 @@ class Usuario(UsuarioBase):
         from_attributes = True
 
 class TareaBase(BaseModel):
-    nombre: str
-    descripcion: Optional[str] = None
+    nombre: str = Field(..., min_length=3, max_length=100)
+    descripcion: Optional[str] = Field(None, max_length=500)
 
 class TareaCreate(TareaBase):
     usuario_id: int
